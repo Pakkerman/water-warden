@@ -31,3 +31,40 @@ startTime
 endTime = startTime + 10 hours
 
 countDown = endTime - currentTime
+
+## Todo
+
+#### Features / Functions
+
+##### Client
+
+- [ ] Timer
+
+  - [x] countdown timer
+  - [ ] set wake up time
+
+- [ ] Water accumulator
+
+  - [ ] Water drinks
+  - [ ] Water cups
+
+- [ ] Stats
+
+  - [ ] Daily average
+
+- [ ] History
+  - [ ] consecutive days that hit goal
+  - [ ] over view
+
+##### Server and backend
+
+- [ ] setup DB
+
+  - [ ] user table
+
+- [ ] Auth
+  - [ ] Social auth probably just use github
+
+#### Styles and animations
+
+- [ ] Animate opening

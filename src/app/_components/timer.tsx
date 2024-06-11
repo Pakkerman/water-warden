@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 
 const WATCH_TIME = 10;
-const year = new Date().getFullYear();
-const month = new Date().getMonth();
-const date = new Date().getDate();
-const wakeHour = 12; // 0-24
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth();
+const date = currentDate.getDate();
+const wakeHour = 7; // 0-24
 const wakeMinute = 0; // 0-59
 
 const startTimestamp = new Date(
@@ -25,9 +26,7 @@ const endTimestamp = new Date(
 ).getTime();
 
 export function Timer() {
-  const [countdown, setCountdown] = useState(
-    Math.floor(endTimestamp / 1000 - new Date().getTime() / 1000),
-  );
+  const [countdown, setCountdown] = useState(0);
   const [ms, setMs] = useState(10);
 
   const hoursLeft = Math.floor(countdown / 3600);
@@ -35,12 +34,19 @@ export function Timer() {
   const secondsLeft = countdown % 60;
 
   useEffect(() => {
+    // Avoid client and sever side html mismatch
+    setCountdown(
+      Math.floor(endTimestamp / 1000 - currentDate.getTime() / 1000),
+    );
+
     const id = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(id);
   }, []);
+
+  if (!countdown) return null;
 
   return (
     <div className="">
