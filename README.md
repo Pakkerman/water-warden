@@ -43,10 +43,9 @@ countDown = endTime - currentTime
   - [x] countdown timer
   - [ ] set wake up time
 
-- [ ] Water accumulator
+- [x] Water accumulator
 
-  - [ ] Water drinks
-  - [ ] Water cups
+  - [x] Water drinks options
 
 - [ ] Stats
 
