@@ -25,7 +25,18 @@ So warden will keen an eye on you during those hours
 
 - The drank amount will subtract the accumulate amount
 
-## Tech
+## Flow
+
+- First open of the day
+  - set wakeup time
+  - ...
+- Open during the day
+  - The accumulator will be filled according time
+  - Click drink button will decrease accumulator
+  - Over click will make accumulator negative, until the daily limit is reached
+  -
+
+## Tech Stack
 
 startTime
 endTime = startTime + 10 hours

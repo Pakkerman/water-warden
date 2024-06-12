@@ -8,7 +8,7 @@ const year = currentDate.getFullYear();
 const month = currentDate.getMonth();
 const date = currentDate.getDate();
 const wakeHour = 7; // 0-24
-const wakeMinute = 0; // 0-59
+const wakeMinute = 33; // 0-59
 
 const startTimestamp = new Date(
   year,
