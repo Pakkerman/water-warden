@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
+import { Providers } from "./contexts/Providers";
 
 export const metadata = {
   title: "Create T3 App",
@@ -16,11 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="relative min-h-[100dvh] bg-gradient-to-b from-[#F8FAFC] to-[#F1F5F9]">
-        <div className="animation-reveal absolute top-0 z-10 h-2 w-full bg-orange-400" />
-        {children}
-        <div className="animation-reveal absolute bottom-0 h-2 w-full bg-orange-400" />
-      </body>
+      <Providers>
+        <body className="relative min-h-[100dvh] bg-gradient-to-b from-[#F8FAFC] to-[#F1F5F9]">
+          <div className="animation-reveal absolute top-0 z-10 h-2 w-full bg-orange-400" />
+          {children}
+          <div className="animation-reveal absolute bottom-0 h-2 w-full bg-orange-400" />
+        </body>
+      </Providers>
     </html>
   );
 }

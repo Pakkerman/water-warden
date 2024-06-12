@@ -1,3 +1,5 @@
+import { useWaterContext } from "../contexts/WaterContenxt";
+
 const drinks = [
   {
     name: "a sip",
@@ -17,13 +19,8 @@ const drinks = [
   },
 ];
 
-export function Drinks({
-  remaining,
-  setRemaining,
-}: {
-  remaining: number;
-  setRemaining: React.Dispatch<React.SetStateAction<number>>;
-}) {
+export function Drinks() {
+  const { accumulation, setAccumulation } = useWaterContext();
   return (
     <ul className="flex w-full justify-around">
       {drinks.map(({ name, amount }) => (
@@ -31,7 +28,9 @@ export function Drinks({
           className="flex w-20 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-blue-400 hover:border-orange-400"
           key={amount}
           onClick={() =>
-            setRemaining(remaining - amount < 0 ? 0 : remaining - amount)
+            setAccumulation(
+              accumulation - amount < 0 ? 0 : accumulation - amount,
+            )
           }
         >
           <p>{name}</p>

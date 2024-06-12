@@ -1,13 +1,15 @@
 "use client";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useWaterContext } from "../contexts/WaterContenxt";
 
 export function WaterAccumulator({ remaining }: { remaining: number }) {
-  const height = Math.floor(remaining / 50);
+  const { accumulation } = useWaterContext();
+  const height = Math.floor(accumulation / 50);
 
   return (
     <div className="relative flex h-full flex-col items-center justify-center ">
-      <h1>remaining: {remaining}</h1>
+      <h1>remaining: {accumulation}</h1>
       <h1>height: {height}</h1>
       {/* <div className="absolute left-20 top-[50%] h-[300px] w-2 translate-y-[-50%] bg-slate-950" /> */}
       {/* <div className="absolute right-20 top-[50%] h-[300px] w-2 translate-y-[-50%] bg-slate-950" /> */}
