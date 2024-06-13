@@ -1,5 +1,6 @@
 "use client";
 
+import { padTime } from "~/utils/utils";
 import { useTimeContext } from "../contexts/TimerContext";
 
 export function Timer() {
@@ -24,8 +25,4 @@ export function Timer() {
       </div>
     </div>
   );
-}
-
-function padTime(input: string | number): string {
-  return input.toString().padStart(2, "0");
 }

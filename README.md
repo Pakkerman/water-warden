@@ -53,7 +53,8 @@ countDown = endTime - currentTime
 
   - [x] countdown timer
   - [x] set wake up time
-  - [ ] manual update wake up time
+  - [x] manual update wake up time
+  - [ ] Sync new update time to countdown
 
 - [x] Water accumulator
 
@@ -70,9 +71,9 @@ countDown = endTime - currentTime
 
 ##### Internal
 
-- [ ] Create contexts
-  - [ ] Water context
-  - [ ] Time context
+- [x] Create contexts
+  - [x] Water context
+  - [x] Time context
 
 ##### Server and backend
 
@@ -85,4 +86,5 @@ countDown = endTime - currentTime
 
 #### Styles and animations
 
-- [ ] Animate opening
+- [x] Animate opening
+- [x] Drawer animation

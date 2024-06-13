@@ -27,11 +27,13 @@ const endTimestamp = new Date(
 
 type TimeContext = {
   countdown: number;
-  // setCountdown?: React.Dispatch<React.SetStateAction<number>>;
+  setCountdown: React.Dispatch<React.SetStateAction<number>>;
   wakeHour: number;
-  // setWakeHour?: React.Dispatch<React.SetStateAction<number>>;
+  setWakeHour: React.Dispatch<React.SetStateAction<number>>;
   wakeMinute: number;
-  // setWakeMinute?: React.Dispatch<React.SetStateAction<number>>;
+  setWakeMinute: React.Dispatch<React.SetStateAction<number>>;
+  showTimeSetting: boolean;
+  setShowTimeSetting: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TimeContext = createContext<TimeContext | null>(null);
@@ -43,6 +45,7 @@ export function TimeContextProvider({
   const [countdown, setCountdown] = useState(0);
   const [wakeHour, setWakeHour] = useState(7);
   const [wakeMinute, setWakeMinute] = useState(33);
+  const [showTimeSetting, setShowTimeSetting] = useState(false);
 
   useEffect(() => {
     setCountdown(
@@ -54,10 +57,21 @@ export function TimeContextProvider({
     }, 1000);
 
     return () => clearInterval(id);
-  }, []);
+  }, [wakeHour, wakeMinute]);
 
   return (
-    <TimeContext.Provider value={{ countdown, wakeMinute, wakeHour }}>
+    <TimeContext.Provider
+      value={{
+        countdown,
+        wakeMinute,
+        wakeHour,
+        showTimeSetting,
+        setCountdown,
+        setWakeMinute,
+        setWakeHour,
+        setShowTimeSetting,
+      }}
+    >
       {children}
     </TimeContext.Provider>
   );
