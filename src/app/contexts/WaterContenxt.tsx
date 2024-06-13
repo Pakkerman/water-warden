@@ -2,7 +2,12 @@
 
 import { createContext, useContext, useState } from "react";
 
-const WaterContext = createContext<any | null>(null);
+type WaterContext = {
+  accumulation: number;
+  setAccumulation: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const WaterContext = createContext<WaterContext | null>(null);
 export function WaterContextProvider({
   children,
 }: {
@@ -19,7 +24,9 @@ export function WaterContextProvider({
 
 export function useWaterContext() {
   const context = useContext(WaterContext);
-  if (!context) return null;
+  if (!context) {
+    throw new Error("useWaterContext must be use inside WaterContextProvider");
+  }
 
   return context;
 }

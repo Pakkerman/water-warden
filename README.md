@@ -52,10 +52,12 @@ countDown = endTime - currentTime
 - [ ] Timer
 
   - [x] countdown timer
-  - [ ] set wake up time
+  - [x] set wake up time
+  - [ ] manual update wake up time
 
 - [x] Water accumulator
 
+  - [x] Water drinks options
   - [x] Water drinks options
 
 - [ ] Stats
@@ -65,6 +67,12 @@ countDown = endTime - currentTime
 - [ ] History
   - [ ] consecutive days that hit goal
   - [ ] over view
+
+##### Internal
+
+- [ ] Create contexts
+  - [ ] Water context
+  - [ ] Time context
 
 ##### Server and backend
 

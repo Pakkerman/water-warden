@@ -1,9 +1,8 @@
 "use client";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+
 import { useWaterContext } from "../contexts/WaterContenxt";
 
-export function WaterAccumulator({ remaining }: { remaining: number }) {
+export function WaterAccumulator() {
   const { accumulation } = useWaterContext();
   const height = Math.floor(accumulation / 50);
 

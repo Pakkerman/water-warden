@@ -1,8 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 
 export function Menu() {
   return (
