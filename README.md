@@ -51,14 +51,13 @@ countDown = endTime - currentTime
 
 - [ ] Timer
 
-  - [x] countdown timer
-  - [x] set wake up time
-  - [x] manual update wake up time
-  - [ ] Sync new update time to countdown
+  - [x] Countdown timer
+  - [x] Set wake up time
+  - [x] Manual update wake up time
+  - [x] Sync new update time to countdown
 
 - [x] Water accumulator
 
-  - [x] Water drinks options
   - [x] Water drinks options
 
 - [ ] Stats
@@ -66,8 +65,8 @@ countDown = endTime - currentTime
   - [ ] Daily average
 
 - [ ] History
-  - [ ] consecutive days that hit goal
-  - [ ] over view
+  - [ ] Consecutive days that hit goal
+  - [ ] Over view
 
 ##### Internal
 
@@ -77,9 +76,9 @@ countDown = endTime - currentTime
 
 ##### Server and backend
 
-- [ ] setup DB
+- [ ] Setup DB
 
-  - [ ] user table
+  - [ ] User table
 
 - [ ] Auth
   - [ ] Social auth probably just use github

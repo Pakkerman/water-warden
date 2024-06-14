@@ -3,13 +3,11 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useTimeContext } from "../contexts/TimerContext";
-import { padTime } from "~/utils/utils";
+import { SettingIcon } from "~/svgs";
 
 export function Menu() {
   return (
-    <div className="grid aspect-square h-full grid-cols-2 place-items-center rounded-xl bg-blue-200">
-      <ChangeWakeTimeButton />
-      <ChangeWakeTimeButton />
+    <div className="grid h-full grid-cols-1 place-items-center rounded-xl bg-blue-200 px-2">
       <ChangeWakeTimeButton />
       <ChangeWakeTimeButton />
     </div>
@@ -21,12 +19,12 @@ export function ChangeWakeTimeButton() {
   return (
     <>
       <button
-        className="h-12 w-12 rounded-md border-2 border-black/20"
+        className="flex h-12 w-12 items-center justify-center rounded-md border-2 border-black"
         onClick={() => {
           setShowTimeSetting(!showTimeSetting);
         }}
       >
-        settings
+        <SettingIcon />
       </button>
       {showTimeSetting && (
         <div

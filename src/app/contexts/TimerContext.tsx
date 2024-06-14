@@ -17,13 +17,6 @@ const startTimestamp = new Date(
   wakeHour,
   wakeMinute,
 ).getTime();
-const endTimestamp = new Date(
-  year,
-  month,
-  date,
-  wakeHour + WATCH_TIME,
-  wakeMinute,
-).getTime();
 
 type TimeContext = {
   countdown: number;
@@ -48,12 +41,22 @@ export function TimeContextProvider({
   const [showTimeSetting, setShowTimeSetting] = useState(false);
 
   useEffect(() => {
-    setCountdown(
-      Math.floor(endTimestamp / 1000 - currentDate.getTime() / 1000),
+    const endTimestamp = new Date(
+      year,
+      month,
+      date,
+      wakeHour + WATCH_TIME,
+      wakeMinute,
+    ).getTime();
+
+    const timeLeft = Math.floor(
+      endTimestamp / 1000 - currentDate.getTime() / 1000,
     );
 
+    setCountdown(timeLeft <= 0 ? 0 : timeLeft);
+
     const id = setInterval(() => {
-      setCountdown((prev) => prev - 1);
+      setCountdown((prev) => (prev <= 0 ? 0 : prev - 1));
     }, 1000);
 
     return () => clearInterval(id);
