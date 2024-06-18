@@ -49,7 +49,7 @@ countDown = endTime - currentTime
 
 ##### Client
 
-- [ ] Timer
+- [x] Timer
 
   - [x] Countdown timer
   - [x] Set wake up time

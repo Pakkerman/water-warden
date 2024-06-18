@@ -7,16 +7,6 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth();
 const date = currentDate.getDate();
-const wakeHour = 13; // 0-24
-const wakeMinute = 33; // 0-59
-
-const startTimestamp = new Date(
-  year,
-  month,
-  date,
-  wakeHour,
-  wakeMinute,
-).getTime();
 
 type TimeContext = {
   countdown: number;
@@ -29,38 +19,62 @@ type TimeContext = {
   setShowTimeSetting: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type LocalData = {
+  wakeHour: number;
+  wakeMinute: number;
+};
+
 const TimeContext = createContext<TimeContext | null>(null);
 export function TimeContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [countdown, setCountdown] = useState(0);
-  const [wakeHour, setWakeHour] = useState(7);
-  const [wakeMinute, setWakeMinute] = useState(33);
+  // const s = useLocalStorage();
+
+  const [storage, setStorage] = useState<LocalData>({
+    wakeHour: 7,
+    wakeMinute: 30,
+  });
+
   const [showTimeSetting, setShowTimeSetting] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [wakeHour, setWakeHour] = useState(-1);
+  const [wakeMinute, setWakeMinute] = useState(-1);
+
+  // intital loading from local storage
+  useEffect(() => {
+    const localData: string | null = localStorage.getItem("water_warden");
+
+    if (localData == null) {
+      setWakeHour(storage.wakeHour);
+      setWakeMinute(storage.wakeMinute);
+      localStorage.setItem("water_warden", JSON.stringify(storage));
+    } else {
+      const data = JSON.parse(localData) as LocalData;
+      setStorage(data);
+      setWakeHour(data.wakeHour);
+      setWakeMinute(data.wakeMinute);
+    }
+  }, []);
 
   useEffect(() => {
-    const endTimestamp = new Date(
-      year,
-      month,
-      date,
-      wakeHour + WATCH_TIME,
-      wakeMinute,
-    ).getTime();
-
-    const timeLeft = Math.floor(
-      endTimestamp / 1000 - currentDate.getTime() / 1000,
+    // FIX: fix this weird condition that makes me cringe
+    if (wakeHour === -1 || wakeMinute === -1) return;
+    localStorage.setItem(
+      "water_warden",
+      JSON.stringify({ wakeHour, wakeMinute }),
     );
-
-    setCountdown(timeLeft <= 0 ? 0 : timeLeft);
-
-    const id = setInterval(() => {
-      setCountdown((prev) => (prev <= 0 ? 0 : prev - 1));
-    }, 1000);
-
-    return () => clearInterval(id);
+    setCountdown(getCountdown());
   }, [wakeHour, wakeMinute]);
+
+  function getCountdown(): number {
+    return Math.floor(
+      new Date(year, month, date, wakeHour + WATCH_TIME, wakeMinute).getTime() /
+        1000 -
+        currentDate.getTime() / 1000,
+    );
+  }
 
   return (
     <TimeContext.Provider

@@ -55,6 +55,11 @@ export function Drawer() {
     }
   }, [showTimeSetting]);
 
+  useEffect(() => {
+    setWakeHourInputValue(wakeHour);
+    setWakeMinuteInputValue(wakeMinute);
+  }, [wakeHour, wakeMinute]);
+
   function setWakeTime() {
     setWakeHour(Number(wakeHourInputValue));
     setWakeMinute(Number(wakeMinuteInputValue));
@@ -78,6 +83,7 @@ export function Drawer() {
               maxLength={2}
               min={0}
               max={24}
+              autoComplete="off"
               onChange={(event) =>
                 setWakeHourInputValue(Number(event.target.value))
               }
@@ -89,6 +95,7 @@ export function Drawer() {
               maxLength={2}
               min={0}
               max={59}
+              autoComplete="off"
               onChange={(event) =>
                 setWakeMinuteInputValue(Number(event.target.value))
               }
