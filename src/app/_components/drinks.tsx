@@ -20,18 +20,20 @@ const drinks = [
 ];
 
 export function Drinks() {
-  const { accumulation, setAccumulation } = useWaterContext();
+  const {
+    accumulation,
+    waterConsumption,
+    setAccumulation,
+    setWaterConsumption,
+  } = useWaterContext();
+
   return (
     <ul className="flex w-full justify-around">
       {drinks.map(({ name, amount }) => (
         <li
           className="flex w-20 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-blue-400 hover:border-orange-400"
           key={amount}
-          onClick={() =>
-            setAccumulation(
-              accumulation - amount < 0 ? 0 : accumulation - amount,
-            )
-          }
+          onClick={() => setWaterConsumption(waterConsumption + amount)}
         >
           <p>{name}</p>
           <p>{amount}ml</p>
