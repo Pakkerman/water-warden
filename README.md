@@ -61,6 +61,10 @@ countDown = endTime - currentTime
   - [x] Water drinks options
   - [x] Calculate water accumulation
   - [x] Drink button working
+  - Interactivity
+    - [ ] Accumulation in realtime (visually)
+    - [x] Undo Button
+    - [ ] Drink all Button (drink all current accumulation)
 
 - [ ] Stats
 
