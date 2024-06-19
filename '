@@ -38,34 +38,22 @@ export function Drinks() {
 }
 
 function DrinkAllButton() {
+  // TODO: this button
   const { setHistory, history } = useWaterContext();
   const { countdown } = useTimeContext();
   const totalDrank = history.reduce((acc, curr) => acc + curr.amount, 0);
   const timeProgress = countdown / (60 * 60 * 10);
-  const currentWaterAccumulation =
-    Math.floor((1 - timeProgress) * 2500) - totalDrank;
+  const currentWaterAccumulation = Math.floor((1 - timeProgress) * 2500);
 
   return (
     <button
       className="flex h-20 w-[50%] flex-col items-center justify-center rounded-md border-2 border-blue-400 text-lg hover:border-orange-400 "
-      disabled={currentWaterAccumulation <= 0}
-      onClick={() => {
-        if (currentWaterAccumulation === 0) return;
-
-        setHistory((prev) => [...prev, { amount: currentWaterAccumulation }]);
-      }}
+      onClick={() =>
+        setHistory((prev) => [...prev, { amount: currentWaterAccumulation }])
+      }
     >
-      {currentWaterAccumulation > 0 ? (
-        <>
-          <label>Drink All</label>
-          <label>({currentWaterAccumulation} ml)</label>
-        </>
-      ) : (
-        <>
-          <label>You are all</label>
-          <label>Hydrated</label>
-        </>
-      )}
+      <label>Drink All</label>
+      <label>({currentWaterAccumulation} ml)</label>
     </button>
   );
 }

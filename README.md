@@ -64,7 +64,7 @@ countDown = endTime - currentTime
   - Interactivity
     - [ ] Accumulation in realtime (visually)
     - [x] Undo Button
-    - [ ] Drink all Button (drink all current accumulation)
+    - [x] Drink all Button (drink all current accumulation)
 
 - [ ] Stats
 

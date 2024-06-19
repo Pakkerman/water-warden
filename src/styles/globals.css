@@ -15,3 +15,7 @@
     height: 0.5rem;
   }
 }
+
+pre {
+  @apply pointer-events-none bg-black/20;
+}
