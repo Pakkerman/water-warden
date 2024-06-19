@@ -7,11 +7,11 @@ type WaterContext = {
   setAccumulation: React.Dispatch<React.SetStateAction<number>>;
   waterConsumption: number;
   setWaterConsumption: React.Dispatch<React.SetStateAction<number>>;
-  history: History;
-  setHistory: React.Dispatch<React.SetStateAction<History>>;
+  history: Array<History>;
+  setHistory: React.Dispatch<React.SetStateAction<Array<History>>>;
 };
 
-type History = Array<{ amount: number }>;
+type History = { amount: number; timestamp: Date };
 
 const WaterContext = createContext<WaterContext | null>(null);
 export function WaterContextProvider({
@@ -21,7 +21,31 @@ export function WaterContextProvider({
 }) {
   const [accumulation, setAccumulation] = useState(500);
   const [waterConsumption, setWaterConsumption] = useState(0);
-  const [history, setHistory] = useState<History>([]);
+  const [history, setHistory] = useState<Array<History>>([]);
+  const [isInit, setIsInit] = useState(true);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("water_warden")!);
+    if (!data) {
+      data = {};
+    }
+
+    if (!data.history) {
+      data.history = [];
+    }
+
+    setHistory(data.history);
+    setIsInit(false);
+  }, []);
+
+  useEffect(() => {
+    if (isInit) return;
+
+    const data = JSON.parse(localStorage.getItem("water_warden")!);
+
+    data.history = history;
+    localStorage.setItem("water_warden", JSON.stringify(data));
+  }, [history]);
 
   return (
     <WaterContext.Provider

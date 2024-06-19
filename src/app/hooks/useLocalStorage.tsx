@@ -1,30 +1,43 @@
-// "use client";
-// import { useState, useEffect } from "react";
-//
-// const initialStorage = { wakeHour: 12, wakeMinute: 30 };
-//
-// export function useLocalStorage() {
-//   const [storage, setStorage] = useState(initialStorage);
-//   const [isClient, setIsClient] = useState(false);
-//   console.log("hook ran");
-//
-//   useEffect(() => {
-//     setIsClient(true);
-//     if (typeof window !== "undefined") {
-//       const storedData = localStorage.getItem("water_warden");
-//       if (storedData) {
-//         setStorage(JSON.parse(storedData));
-//       } else {
-//         localStorage.setItem("water_warden", JSON.stringify(initialStorage));
-//         setStorage(initialStorage);
-//       }
-//     }
-//   }, []);
-//
-//   if (!isClient) {
-//     // Return a placeholder during server-side rendering
-//     return initialStorage;
-//   }
-//
-//   return storage;
-// }
+"use client";
+import { useState, useEffect } from "react";
+
+export type LocalStorageData = {
+  wakeHour: number;
+  wakeMinute: number;
+  history: Array<History>;
+};
+export type History = { amount: number; timestamp: Date };
+
+const initialStorage: LocalStorageData = {
+  wakeHour: 12,
+  wakeMinute: 30,
+  history: [],
+};
+
+//TODO: Setting up local storage hook and implement to contexts
+export function useLocalStorage() {
+  const [isInit, setIsInit] = useState(true);
+  const [storage, setStorage] = useState<LocalStorageData>(initialStorage);
+
+  useEffect(() => {
+    const store = localStorage.getItem("test");
+    let data = initialStorage;
+    if (store) {
+      data = JSON.parse(store);
+    }
+
+    localStorage.setItem("test", JSON.stringify(storage));
+    setStorage(data);
+    setIsInit(false);
+  }, []);
+
+  useEffect(() => {
+    console.log("this ran with init is", isInit);
+    if (isInit) return;
+
+    console.log("this ran with after init", isInit);
+    localStorage.setItem("test", JSON.stringify(storage));
+  }, [storage]);
+
+  return { storage, setStorage };
+}

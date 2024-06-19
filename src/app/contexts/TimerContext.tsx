@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useContext, createContext, useEffect } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const WATCH_TIME = 10;
 const currentDate = new Date();
@@ -30,7 +31,9 @@ export function TimeContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // const s = useLocalStorage();
+  const { storage: hookStorage, setStorage: setHookStorage } =
+    useLocalStorage();
+  console.log("in the time contenxt", hookStorage);
 
   const [storage, setStorage] = useState<LocalData>({
     wakeHour: 7,
@@ -41,6 +44,7 @@ export function TimeContextProvider({
   const [countdown, setCountdown] = useState(0);
   const [wakeHour, setWakeHour] = useState(-1);
   const [wakeMinute, setWakeMinute] = useState(-1);
+  const [isInit, setIsInit] = useState(true);
 
   // intital loading from local storage
   useEffect(() => {
@@ -56,15 +60,25 @@ export function TimeContextProvider({
       setWakeHour(data.wakeHour);
       setWakeMinute(data.wakeMinute);
     }
+
+    setIsInit(false);
   }, []);
 
   useEffect(() => {
-    // FIX: fix this weird condition that makes me cringe
-    if (wakeHour === -1 || wakeMinute === -1) return;
-    localStorage.setItem(
-      "water_warden",
-      JSON.stringify({ wakeHour, wakeMinute }),
-    );
+    if (isInit) return;
+
+    const data = JSON.parse(localStorage.getItem("water_warden")!);
+
+    data.wakeHour = wakeHour;
+    data.wakeMinute = wakeMinute;
+
+    localStorage.setItem("water_warden", JSON.stringify(data));
+    setHookStorage((prev) => ({
+      ...prev,
+      wakeHour,
+      wakeMinute,
+    }));
+
     setCountdown(getCountdown());
   }, [wakeHour, wakeMinute]);
 

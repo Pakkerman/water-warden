@@ -30,9 +30,14 @@ export function Drinks() {
         <DrinkAllButton />
         <UndoDrinkButton />
       </div>
-      <div className="fixed bottom-0 right-0 z-10 text-xs">
-        <pre>{JSON.stringify(history, null, 2)}</pre>
-      </div>
+
+      <pre className="fixed bottom-0 right-0 z-20 text-xs">
+        {history.map((item, idx) => (
+          <pre key={idx}>
+            {idx}:{item.amount}ml
+          </pre>
+        ))}
+      </pre>
     </div>
   );
 }
@@ -52,7 +57,13 @@ function DrinkAllButton() {
       onClick={() => {
         if (currentWaterAccumulation === 0) return;
 
-        setHistory((prev) => [...prev, { amount: currentWaterAccumulation }]);
+        setHistory((prev) => [
+          ...prev,
+          {
+            amount: currentWaterAccumulation,
+            timestamp: new Date(),
+          },
+        ]);
       }}
     >
       {currentWaterAccumulation > 0 ? (
@@ -94,7 +105,7 @@ function DrinkButtons() {
           key={amount}
           onClick={() => {
             setWaterConsumption(waterConsumption + amount);
-            setHistory((prev) => [...prev, { amount }]);
+            setHistory((prev) => [...prev, { amount, timestamp: new Date() }]);
           }}
         >
           <p>{name}</p>
