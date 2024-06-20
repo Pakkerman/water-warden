@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTimeContext } from "../contexts/TimerContext";
 import { useWaterContext } from "../contexts/WaterContext";
 
@@ -9,8 +10,10 @@ const TEN_HOURS_IN_SECONDS = 60 * 60 * 10;
 const ACCUMULATION_PER_SECOND = 100 / TEN_HOURS_IN_SECONDS;
 
 export function WaterAccumulator() {
+  const [isClient, setIsClient] = useState(false);
   const { countdown } = useTimeContext();
   const { history } = useWaterContext();
+
   const progress = 1 - countdown / TEN_HOURS_IN_SECONDS;
   const progressOffset = Math.min(
     history.reduce((acc, curr) => acc + curr.amount, 0) / WATER_GOAL,
@@ -20,6 +23,14 @@ export function WaterAccumulator() {
   const style = {
     height: `${Math.max(Math.floor(HEIGHT * (progress - progressOffset)), 0)}px`,
   };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="relative flex h-full flex-col items-center justify-center ">

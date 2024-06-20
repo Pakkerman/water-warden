@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type WaterContext = {
   accumulation: number;
@@ -19,32 +20,25 @@ export function WaterContextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { storage, setStorage, isLoading } = useLocalStorage();
+
   const [accumulation, setAccumulation] = useState(500);
   const [waterConsumption, setWaterConsumption] = useState(0);
-  const [history, setHistory] = useState<Array<History>>([]);
+  const [history, setHistory] = useState<Array<History>>(storage.history);
   const [isInit, setIsInit] = useState(true);
 
   useEffect(() => {
-    let data = JSON.parse(localStorage.getItem("water_warden")!);
-    if (!data) {
-      data = {};
-    }
+    if (isLoading) return;
 
-    if (!data.history) {
-      data.history = [];
-    }
+    setHistory(storage.history);
 
-    setHistory(data.history);
     setIsInit(false);
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     if (isInit) return;
 
-    const data = JSON.parse(localStorage.getItem("water_warden")!);
-
-    data.history = history;
-    localStorage.setItem("water_warden", JSON.stringify(data));
+    setStorage((prev) => ({ ...prev, history }));
   }, [history]);
 
   return (

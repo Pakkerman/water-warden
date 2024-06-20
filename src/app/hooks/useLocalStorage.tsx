@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 export type LocalStorageData = {
@@ -9,35 +10,35 @@ export type LocalStorageData = {
 export type History = { amount: number; timestamp: Date };
 
 const initialStorage: LocalStorageData = {
-  wakeHour: 12,
+  wakeHour: 7,
   wakeMinute: 30,
   history: [],
 };
 
-//TODO: Setting up local storage hook and implement to contexts
 export function useLocalStorage() {
-  const [isInit, setIsInit] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [storage, setStorage] = useState<LocalStorageData>(initialStorage);
 
   useEffect(() => {
-    const store = localStorage.getItem("test");
-    let data = initialStorage;
+    const store = localStorage.getItem("water_warden");
+
+    let data;
     if (store) {
-      data = JSON.parse(store);
+      data = JSON.parse(store) as LocalStorageData;
+    } else {
+      data = initialStorage;
     }
 
-    localStorage.setItem("test", JSON.stringify(storage));
+    localStorage.setItem("water_warden", JSON.stringify(data));
     setStorage(data);
-    setIsInit(false);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    console.log("this ran with init is", isInit);
-    if (isInit) return;
+    if (isLoading) return;
 
-    console.log("this ran with after init", isInit);
-    localStorage.setItem("test", JSON.stringify(storage));
+    localStorage.setItem("water_warden", JSON.stringify(storage));
   }, [storage]);
 
-  return { storage, setStorage };
+  return { storage, setStorage, isLoading };
 }

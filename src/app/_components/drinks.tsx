@@ -1,6 +1,7 @@
 import { UndoIcon } from "~/svgs";
 import { useWaterContext } from "../contexts/WaterContext";
 import { useTimeContext } from "../contexts/TimerContext";
+import { useEffect, useState } from "react";
 
 const drinks = [
   {
@@ -43,12 +44,19 @@ export function Drinks() {
 }
 
 function DrinkAllButton() {
+  const [isClient, setIsClient] = useState(false);
   const { setHistory, history } = useWaterContext();
   const { countdown } = useTimeContext();
+
   const totalDrank = history.reduce((acc, curr) => acc + curr.amount, 0);
   const timeProgress = countdown / (60 * 60 * 10);
-  const currentWaterAccumulation =
-    Math.floor((1 - timeProgress) * 2500) - totalDrank;
+  const currentWaterAccumulation = isClient
+    ? Math.floor((1 - timeProgress) * 2500) - totalDrank
+    : 0;
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <button
