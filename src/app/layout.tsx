@@ -21,6 +21,7 @@ export default function RootLayout({
           <div className="animation-reveal absolute top-0 z-10 h-2 w-full bg-orange-400" />
           {children}
           <div className="animation-reveal absolute bottom-0 h-2 w-full bg-orange-400" />
+          <div id="modal-root" />
         </body>
       </Providers>
     </html>
